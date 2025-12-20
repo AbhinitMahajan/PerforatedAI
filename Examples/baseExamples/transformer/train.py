@@ -372,6 +372,11 @@ def train_dendritic(args, model, train_loader, val_loader, device, vocab):
         if training_complete:
             print("\n  ⚠ pbTracker indicates training is complete. Stopping early.")
             break
+        
+        # Check if we've reached the epoch limit
+        if epoch + 1 >= args.epochs:
+            print(f"\n  ⚠ Reached epoch limit ({args.epochs}). Stopping.")
+            break
 
     total_training_time = time.time() - training_start_time
     final_params = model.count_parameters()

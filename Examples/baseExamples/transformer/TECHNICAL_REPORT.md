@@ -157,6 +157,21 @@ After the original experiment, the code was optimized (lines 185-208 in `train.p
 - **Compression: 31.8% parameter reduction**
 - Dynamic dendrite additions: 3 times during training, each adding ~400K params (13-14% growth)
 
+**Perplexity Comparison (5 Epochs, Configuration B):**
+
+The following table demonstrates the effect of model size reduction and dendritic augmentation on validation perplexity:
+
+| Model | Parameters | Val Perplexity | Compression |
+|-------|------------|----------------|-------------|
+| Vanilla (256d, 2L) - Full Size | 6,709,007 | 86.51 | — |
+| Vanilla (128d, 2L) - Smaller | 2,966,287 | 90.57 | -55.8% |
+| Dendritic (128d, 2L) | 3,361,807 | 90.56 | -49.9% |
+
+**Key Observations:**
+- Reducing model size from 256-dim to 128-dim without dendrites increases perplexity by 4.06 points (86.51 → 90.57), demonstrating the cost of naive compression.
+- The dendritic model (128-dim base + initial dendrites) achieves equivalent perplexity to the smaller vanilla model (90.56 vs 90.57) at 5 epochs.
+- At this early stage (5 epochs), we haven't achieved better perplexity with the dendritic model. Extended training (30+ epochs) triggers dynamic capacity additions that could maintain the stable validation performance while vanilla models might begin overfitting. Good exercise will be to train it for more epochs. 
+
 
 ### 3.2 Training Dynamics and Generalization
 
